@@ -20,7 +20,7 @@ app.use(morgan('dev'));
 // add routes
 app.use(require('../route/ship-router.js'));
 // add error middleware
-app.use(require('./errore-middleware.js'));
+app.use(require('./error-middleware.js'));
 
 // export serverControl
 const serverControl = module.exports = {};
@@ -46,7 +46,8 @@ serverControl.stop = () => {
         server.isOn = false;
         resolve();
       });
-      reject();
+      return;
     }
+    reject();
   });
 };
