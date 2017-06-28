@@ -11,10 +11,27 @@ const Ship = require('../model/ship.js');
 const shipRouter = module.exports = new Router();
 
 shipRouter.post('/api/ships', jsonParser, (req, res, next) => {
-  console.log('POST /api/ships');
-  console.log('REQ.BODY', req.body);
   new Ship(req.body)
   .save()
   .then(ship => res.json(ship))
+  .catch(next);
+});
+
+shipRouter.get('/api/ships/:id', (req, res, next) => {
+  console.log('GET /api/ships/:id');
+  Ship.findById(req.params.id)
+  .then(ship => res.json(ship))
+  .catch(next);
+});
+
+shipRouter.put('/api/ships/:id', jsonParser, (req, res, next) => {
+  Ship.findByIdAndUpdate(req.params.id, req.body, {new:true})
+  .then(ship => res.json(ship))
+  .catch(next);
+});
+
+shipRouter.delete('/api/ships/:id', (req, res, next) => {
+  Ship.findByIdAndRemove(req.params.id)
+  .then(() => res.sendStatus(204))
   .catch(next);
 });

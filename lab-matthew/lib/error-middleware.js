@@ -6,8 +6,8 @@ module.exports = (err, req, res, next) => {
   if(err.message.toLowerCase().includes('validation failed'))
     return res.sendStatus(400);
 
-  if(err.message.indexOf('duplicate key') > -1)
-    return res.sendstatus(409);
+  if(err.message.toLowerCase().includes('duplicate key'))
+    return res.sendStatus(409);
 
   if(err.message.toLowerCase().includes('object failed'))
     return res.sendStatus(404);
